@@ -1,0 +1,26 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: Nunito;
+  src: url(/fonts/Nunito_Sans/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf);
+}
+
+@font-face {
+  font-family: Sacramento;
+  src: url(/fonts/Sacramento/Sacramento-Regular.ttf);
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito';
+}
+
+.login-card{
+  background-image: url(/images/login-bg.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
