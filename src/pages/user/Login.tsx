@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import InputField from "../../components/InputField";
 import { flex_center, glassmorphism } from "../../style";
-import { loginValidation } from "../../utils/validation/login";
+import { LoginFormValues, loginValidation } from "../../utils/validation/login";
+import AuthForm from "../../components/AuthForm";
+import { loginInitialValues } from "../../types/authForm";
 
 
-function Login() {
-    const [rememberMe, setRememberMe] = useState(false);
 
-    // Handle "Remember Me" checkbox separately
-    function handleRememberMeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setRememberMe(e.target.checked);
+const Login = () => {
+    const formFields = [
+        { label: "Email", name: "email", type: "email", placeholder: "Enter your email" },
+        { label: "Password", name: "password", type: "password", placeholder: "Enter your password" }
+    ];
+
+    const handleSubmit = (values: LoginFormValues) => {
+        console.log(values);
+        
     }
+
 
     return (
         <div className={`min-h-screen bg-primary ${flex_center} overflow-hidden relative lg:p-10`}>
@@ -36,61 +40,13 @@ function Login() {
                     </div>
 
                     {/* Formik form for handling login */}
-                    <Formik
-                        initialValues={{ email: "", password: "" }} 
-                        validationSchema={loginValidation} 
-                        onSubmit={(values) => {
-                            console.log(values);
-                        }}
-                    >
-                        {({ handleChange, handleSubmit }) => (
-                            <Form onSubmit={handleSubmit} className="w-full space-y-4 lg:space-y-6">
-                                {/* Email field */}
-                                <div>
-                                    <InputField
-                                        label="Email"
-                                        type="email"
-                                        id="email"
-                                        placeholder="Enter your email"
-                                        name="email"
-                                        onChange={handleChange}
-                                    />
-                                    <ErrorMessage name="email" component="div" className="text-red-500 text-sm h-3" />
-                                </div>
-                                
-                                {/* Password field */}
-                                <div>
-                                    <InputField
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        placeholder="Enter your password"
-                                        name="password"
-                                        onChange={handleChange}
-                                    />
-                                    <ErrorMessage name="password" component="div" className="text-red-500 text-sm h-3" />
-                                </div>
-
-                                {/* Remember Me checkbox and Forgot Password link */}
-                                <div className="flex items-center justify-between">
-                                    <label className="inline-flex items-center text-sm">
-                                        <input 
-                                            type="checkbox" 
-                                            className="form-checkbox text-secondary mr-2" 
-                                            checked={rememberMe}
-                                            onChange={handleRememberMeChange}
-                                        />
-                                        Remember me
-                                    </label>
-                                    <a href="#" className="text-sm text-secondary hover:underline">Forgot password?</a>
-                                </div>
-
-                                <button type="submit" className="w-full py-2 md:py-3 text-white bg-secondary rounded-md hover:bg-indigo-700 text-sm md:text-base">
-                                    Sign In
-                                </button>
-                            </Form>
-                        )}
-                    </Formik>
+                    <AuthForm 
+                        initialValues={loginInitialValues}
+                        validationSchema={loginValidation}
+                        onSubmit={handleSubmit}
+                        formFields={formFields}
+                        buttonText="Sign In"
+                    />
 
                     <p className="flex md:hidden text-xs text-secondary">
                         Don't have an account? &nbsp;
@@ -113,7 +69,7 @@ function Login() {
 
                     <p className="hidden md:flex absolute bottom-3 text-xs text-white">
                         Don't have an account? &nbsp;
-                        <span className="font-bold">SIGNUP</span>
+                        <a href="/signup" className="font-bold">SIGNUP</a>
                     </p>
                 </div>
 

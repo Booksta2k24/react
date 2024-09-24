@@ -25,3 +25,10 @@ body {
   background-position: center;
 }
 
+.signup-card{
+  background-image: url(/images/login-bg.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
