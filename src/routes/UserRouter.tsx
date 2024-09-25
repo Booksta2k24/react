@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import Login from '../pages/user/Login';
-import Signup from '../pages/user/Signup';
-
+import { Login, Signup } from '../pages/user';
 
 function UserRouter() {
 
