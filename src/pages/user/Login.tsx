@@ -1,24 +1,43 @@
 import { flex_center, glassmorphism } from "../../style";
-import { LoginFormValues, loginValidation } from "../../utils/validation/login";
-import AuthForm from "../../components/AuthForm";
-import { loginInitialValues } from "../../types/authForm";
+import { loginValidation } from "../../utils/validation/login";
+import { LoginData, loginInitialValues } from "../../types/authForm";
+import { userLoginApi } from "../../api/auth/login";
+import { AuthForm } from "../../components";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { loginFormFields } from "../../constants";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../features/user/userSlice";
 
 
 
 const Login = () => {
-    const formFields = [
-        { label: "Email", name: "email", type: "email", placeholder: "Enter your email" },
-        { label: "Password", name: "password", type: "password", placeholder: "Enter your password" }
-    ];
+    const dispatch = useDispatch();
 
-    const handleSubmit = (values: LoginFormValues) => {
-        console.log(values);
-        
-    }
+    const mutationOptions: UseMutationOptions<LoginData, Error, LoginData> = {
+        onSuccess: (data: LoginData) => {
+            console.log("Login successful:", data);
+            dispatch(setUser(data));
+            alert("data stored to redux...")
+        },
+        onError: (error: Error) => {
+            console.error("Login failed:", error);
+            alert("Login failed. Please check your credentials.");
+        }
+    };
 
+    const mutation = useMutation<LoginData, Error, LoginData>({
+        mutationFn: userLoginApi,
+        ...mutationOptions
+    });
 
+    
+    const handleSubmit = async (values: LoginData) => {
+        mutation.mutate(values);
+    };
+    
+    
     return (
-        <div className={`min-h-screen bg-primary ${flex_center} overflow-hidden relative lg:p-10`}>
+        <div className={`min-h-screen bg-[#f4f4f4] ${flex_center} overflow-hidden relative lg:p-10`}>
             <img src="/images/login-svg-bottom.svg" className="absolute -top-96 -left-96 z-0 max-w-[200%] sm:max-w-full" />
             <img src="/images/login-svg-bottom.svg" className="absolute -bottom-80 -right-80 z-0 rotate-180 max-w-[200%] sm:max-w-full" />
 
@@ -44,7 +63,7 @@ const Login = () => {
                         initialValues={loginInitialValues}
                         validationSchema={loginValidation}
                         onSubmit={handleSubmit}
-                        formFields={formFields}
+                        formFields={loginFormFields}
                         buttonText="Sign In"
                     />
 

@@ -2,12 +2,12 @@ import Yup from 'yup';
 import { LoginFormValues } from '../utils/validation/login';
 import { SignupFormValues } from '../utils/validation/signup';
 
-interface LoginData {
+export interface LoginData {
     email: string;
     password: string;
 }
 
-interface SignupData {
+export interface SignupData {
     email: string;
     username: string;
     password: string;
