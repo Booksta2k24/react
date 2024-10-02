@@ -7,6 +7,7 @@ import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { loginFormFields } from "../../constants";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
+import GoogleAuthButton from "../../components/GoogleAuth";
 
 
 
@@ -47,10 +48,7 @@ const Login = () => {
                     
                     <h1 className="text-2xl md:text-3xl font-bold text-center">Time to explore</h1>
 
-                    <button className="flex items-center justify-center w-full py-3 border-[1px] text-black rounded-[25px] text-sm md:text-base">
-                        <img src="/images/google-icon.svg" alt="Google icon" className="w-5 h-5 md:w-6 md:h-6 mr-2" />
-                        Continue with Google
-                    </button>
+                    <GoogleAuthButton />
 
                     <div className="flex items-center w-full">
                         <div className="border-b w-full"></div>
